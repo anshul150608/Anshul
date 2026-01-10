@@ -1,1014 +1,803 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive personal portfolio website design</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anshul | BTech Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#f8fafc;
+      --card:#ffffff;
+      --text:#0f172a;
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="style.css">
+      --primary:#2563eb;
+      --dark:#0f172a;
+      --light:#f8fafc;
+      --gray:#64748b;
+    }
 
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Poppins',sans-serif;
+      scroll-behavior:smooth;
+    }
+
+    body{
+      background:var(--bg);
+      color:var(--text);
+    }
+
+    body.dark{
+      --bg:#0f172a;
+      --card:#1e293b;
+      --text:#f8fafc;
+    }
+
+    /* ===== NAVBAR ===== */
+    header{
+      position:fixed;
+      top:0;left:0;
+      width:100%;
+      background:#fff;
+      box-shadow:0 4px 20px rgba(0,0,0,0.05);
+      z-index:1000;
+    }
+
+    .nav{
+      max-width:1100px;
+      margin:auto;
+      padding:1rem 1.5rem;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    .logo{
+      font-weight:700;
+      font-size:1.3rem;
+      color:var(--primary);
+    }
+
+    .nav-links{
+      display:flex;
+      gap:1.5rem;
+    }
+
+    .nav-links a{
+      text-decoration:none;
+      color:var(--dark);
+      font-weight:500;
+      transition:0.3s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active{
+      color:var(--primary);
+    }
+
+    .menu-btn{
+      display:none;
+      font-size:1.8rem;
+      cursor:pointer;
+    }
+
+    /* ===== SECTIONS ===== */
+    section{
+      padding:6rem 1.5rem 4rem;
+      max-width:1100px;
+      margin:auto;
+    }
+
+    .section-title{
+      font-size:2rem;
+      margin-bottom:2rem;
+      text-align:center;
+      position:relative;
+    }
+
+    .section-title::after{
+      content:"";
+      width:60px;
+      height:4px;
+      background:var(--primary);
+      display:block;
+      margin:0.5rem auto 0;
+      border-radius:10px;
+    }
+
+    /* ===== HOME ===== */
+    .home{
+      min-height:100vh;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      align-items:center;
+      gap:2rem;
+    }
+
+    .home h1{
+      font-size:2.8rem;
+    }
+
+    .home h1 span{
+      color:var(--primary);
+    }
+
+    .home p{
+      margin:1rem 0;
+      color:var(--gray);
+    }
+
+    .social-links{
+      margin-top:1.5rem;
+      display:flex;
+      gap:1rem;
+      flex-wrap:wrap;
+    }
+
+    .social-links a{
+      padding:0.6rem 1.2rem;
+      border-radius:25px;
+      text-decoration:none;
+      font-size:0.9rem;
+      color:#fff;
+      background:var(--primary);
+      transition:0.3s;
+    }
+
+    .social-links a.github{background:#111827;}
+    .social-links a.linkedin{background:#0a66c2;}
+
+    .social-links a:hover{opacity:0.85;}
+
+    .btn{
+      display:inline-block;
+      padding:0.75rem 1.5rem;
+      background:var(--primary);
+      color:#fff;
+      border-radius:30px;
+      text-decoration:none;
+      transition:0.3s;
+    }
+
+    .btn:hover{opacity:0.9;}
+
+    .home-img{
+      text-align:center;
+    }
+
+    .home-img img{
+      width:280px;
+      height: 280px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    /* ===== ABOUT ===== */
+    .about-content{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:2rem;
+      align-items:center;
+    }
+
+    .about-content p{
+      color:var(--gray);
+      line-height:1.7;
+    }
+
+    /* ===== SKILLS ===== */
+    .skills-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:2rem;
+      align-items:stretch;
+    }
+
+    .skill{
+      background:var(--card);
+      padding:1.8rem;
+      border-radius:20px;
+      box-shadow:0 15px 40px rgba(0,0,0,0.15);
+      transition:0.4s;
+      text-align:center;
+    }
+
+    .skill:hover{
+      transform:translateY(-10px) scale(1.03);
+      box-shadow:0 0 25px rgba(37,99,235,0.7);
+    }
+
+    .skill span{
+      display:inline-block;
+      margin:0.7rem 0;
+      padding:0.3rem 0.8rem;
+      background:var(--primary);
+      color:#fff;
+      border-radius:20px;
+      font-size:0.8rem;
+    }
+
+      background:#fff;
+      padding:1.5rem;
+      border-radius:15px;
+      box-shadow:0 10px 25px rgba(0,0,0,0.05);
+    }
+
+    .skill h3{margin-bottom:0.5rem;}
+
+    /* ===== QUALIFICATION ===== */
+    .timeline{
+      position:relative;
+      margin:2rem 0;
+    }
+
+    .timeline::before{
+      content:"";
+      position:absolute;
+      left:50%;
+      width:3px;
+      height:100%;
+      background:var(--primary);
+      transform:translateX(-50%);
+    }
+
+    .timeline-item{
+      width:50%;
+      padding:1rem 2rem;
+      position:relative;
+    }
+
+    .timeline-item:nth-child(odd){left:0;text-align:right;}
+    .timeline-item:nth-child(even){left:50%;}
+
+    .timeline-item::after{
+      content:"";
+      position:absolute;
+      top:20px;
+      width:15px;height:15px;
+      background:var(--primary);
+      border-radius:50%;
+    }
+
+    .timeline-item:nth-child(odd)::after{right:-8px;}
+    .timeline-item:nth-child(even)::after{left:-8px;}
+
+    /* ===== PROJECTS ===== */
+    /* ===== PROJECTS (HOVER OVERLAY STYLE) ===== */
+.projects-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
+  gap:2rem;
+}
+
+.project-card{
+  position:relative;
+  overflow:hidden;
+  border-radius:22px;
+  height:260px;
+  box-shadow:0 20px 45px rgba(0,0,0,0.25);
+}
+
+.project-card img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:transform 0.6s ease;
+}
+
+/* Overlay */
+.project-overlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    to bottom,
+    rgba(15,23,42,0.3),
+    rgba(15,23,42,0.95)
+  );
+  color:#fff;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:2rem;
+  opacity:0;
+  transform:translateY(25px);
+  transition:0.5s ease;
+}
+
+.project-card:hover img{
+  transform:scale(1.15);
+}
+
+.project-card:hover .project-overlay{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.project-overlay h3{
+  color:#60a5fa;
+  font-size:1.2rem;
+  margin-bottom:0.6rem;
+}
+
+.project-overlay p{
+  font-size:0.9rem;
+  line-height:1.6;
+  margin-bottom:1.2rem;
+}
+
+.project-overlay a{
+  align-self:flex-start;
+  padding:0.45rem 1.2rem;
+  background:#2563eb;
+  color:#fff;
+  border-radius:20px;
+  font-size:0.85rem;
+  text-decoration:none;
+  transition:0.3s;
+}
+
+.project-overlay a:hover{
+  background:#1d4ed8;
+}
+
+
+    /* ===== google form ===== */
+
+/* ===== GET IN TOUCH ===== */
+.getintouch{
+  padding:5rem 1.5rem;
+  background:linear-gradient(135deg, #020617, #020617);
+  display:flex;
+  justify-content:center;
+}
+
+.getintouch-box{
+  max-width:700px;
+  width:100%;
+  text-align:center;
+  background:#FFFFFF;
+  padding:3rem 2.5rem;
+  border-radius:25px;
+  box-shadow:0 30px 60px rgba(0,0,0,0.7);
+}
+
+.getintouch-box h2{
+  font-size:2.2rem;
+  color:#38bdf8;
+  margin-bottom:1rem;
+}
+
+.getintouch-box .subtitle{
+  color:#FFFFFF;
+  font-size:1rem;
+  line-height:1.7;
+  margin-bottom:1.5rem;
+}
+
+.getintouch-box .highlight-text{
+  font-size:1.2rem;
+  font-weight:600;
+  color:#60a5fa;
+  margin-bottom:2rem;
+}
+
+/* Button */
+.getintouch-btn{
+  display:inline-block;
+  padding:0.9rem 2.2rem;
+  border-radius:40px;
+  background:#3b82f6;
+  color:#ffffff;
+  text-decoration:none;
+  font-size:1rem;
+  font-weight:500;
+  transition:0.4s ease;
+}
+
+.getintouch-btn:hover{
+  background:#2563eb;
+  box-shadow:0 0 30px rgba(59,130,246,0.9);
+  transform:translateY(-5px);
+}
+
+/* Responsive */
+@media(max-width:600px){
+  .getintouch-box{
+    padding:2.2rem 1.5rem;
+  }
+
+  .getintouch-box h2{
+    font-size:1.8rem;
+  }
+
+  .getintouch-box .highlight-text{
+    font-size:1.05rem;
+  }
+}
+
+
+
+    /* ===== CONTACT ===== */
+   /* ===== FOOTER ===== */
+.footer{
+  background:linear-gradient(to bottom, #050505, #0b0b0b);
+  padding:4rem 1.5rem 2rem;
+  text-align:center;
+  color:#e5e7eb;
+}
+
+/* Social Icons */
+.footer-social{
+  display:flex;
+  justify-content:center;
+  gap:2rem;
+  margin-bottom:2.5rem;
+}
+
+.footer-social a{
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  border:2px solid #3b82f6;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#ffffff;
+  font-size:1.5rem;
+  transition:0.4s ease;
+}
+
+.footer-social a:hover{
+  background:#3b82f6;
+  box-shadow:0 0 25px rgba(59,130,246,0.9);
+  transform:translateY(-8px);
+}
+
+
+
+
+/* Contact Card */
+.footer-card{
+  background:#121212;
+  max-width:420px;
+  margin:0 auto 2rem;
+  padding:2rem;
+  border-radius:18px;
+  box-shadow:0 20px 45px rgba(0,0,0,0.6);
+}
+
+.footer-card h3{
+  color:#38bdf8;
+  font-size:1.6rem;
+  margin-bottom:1.5rem;
+}
+
+.footer-card p{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:0.7rem;
+  margin:0.8rem 0;
+  font-size:1rem;
+}
+
+.footer-card i{
+  color:#38bdf8;
+  font-size:1.1rem;
+}
+
+/* Copyright */
+.footer-copy{
+  font-size:0.85rem;
+  color:#9ca3af;
+  margin-top:2rem;
+}
+
+/* Responsive */
+@media(max-width:600px){
+  .footer-social{
+    gap:1.2rem;
+  }
+  .footer-social a{
+    width:52px;
+    height:52px;
+    font-size:1.3rem;
+  }
+}
+
+
+    /* ===== RESPONSIVE ===== */
+    @media(max-width:768px){
+      .home,.about-content{grid-template-columns:1fr;}
+      .timeline::before{left:20px;}
+      .timeline-item{
+        width:100%;
+        padding-left:3rem;
+        text-align:left!important;
+        left:0!important;
+      }
+      .timeline-item::after{left:12px!important;}
+      .nav-links{
+        position:absolute;
+        top:100%;left:0;
+        width:100%;
+        background:#fff;
+        flex-direction:column;
+        display:none;
+      }
+      .nav-links.show{display:flex;}
+      .menu-btn{display:block;}
+    }
+  </style>
 </head>
-    <style>/* ✅ Global Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    text-decoration: none;
-    border: none;
-    outline: none;
-    scroll-behavior: smooth;
-    font-family: sans-serif;
-}
-
-/* ✅ Color Variables */
-:root {
-    --bg-color: #191f36;
-    --snd-bg-color: #262840;
-    --text-color: #fff;
-    --main-color: #5982f4;
-}
-
-/* ✅ Base Styles */
-html {
-    font-size: 62.5%;
-    overflow-x: hidden;
-}
-
-body {
-    background: var(--bg-color);
-    color: var(--text-color);
-}
-
-/* ✅ Section Padding */
-section {
-    min-height: 100vh;
-    padding: 10rem 9% 2rem;
-}
-
-/* ✅ HEADER Fixes */
-.header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 1.5rem 9%;
-    background-color: var(--bg-color) !important;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 100;
-    border-bottom: none !important;  /* ✅ Remove bottom border */
-    box-shadow: none !important;  /* ✅ Remove shadow */
-    outline: none !important;
-}
-
-/* ✅ Logo */
-.header .logo {
-    font-size: 3rem;
-    color: var(--text-color);
-    font-weight: 700;
-    margin-right: auto;
-}
-
-/* ✅ Navbar */
-.navbar {
-    display: flex;
-    gap: 3rem;
-}
-
-.navbar a {
-    font-size: 1.8rem;
-    color: var(--text-color);
-    font-weight: 700;
-    padding: 1rem 1.5rem;
-    transition: color 0.3s ease-in-out;
-}
-
-/* ✅ Navbar Hover Effect */
-.navbar a:hover {
-    color: var(--main-color);
-}
-
-/* ✅ Remove Unwanted Borders/Shadows */
-body, section, .navbar {
-    box-shadow: none !important;
-    border-bottom: none !important;
-}
-
-/* ✅ Mobile Menu Icon */
-#menu-icon {
-    font-size: 3.6rem;
-    color: var(--text-color);
-    display: none;
-}
-
-/* ✅ Home Section */
-.home {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 5rem;
-}
-
-/* ✅ Home Content */
-.home-content h4 {
-    font-size: 3rem;
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-}
-
-.home-content h1 {
-    font-size: 6rem;
-    font-weight: 700;
-    line-height: 1.3;
-    margin-bottom: 1.5rem;
-}
-
-.home-content h3 {
-    font-size: 3.6rem;
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-}
-.multiple-text{
-    color: var(--main-color)
-}
-
-.home-content p {
-    font-size: 1.8rem;
-    margin-top: 1.5rem;
-    line-height: 1.6;
-}
-
-/* ✅ Image Round Styling */
-.home-img img {
-    width: 25vw;
-    height: 25vw;
-    border-radius: 50%;
-    object-fit: cover;
-    animation: floatImage 4s ease-in-out infinite;
-}
-
-/* ✅ Floating Animation */
-@keyframes floatImage {
-    0% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-2.4rem);
-    }
-    100% {
-        transform: translateY(0);
-    }
-}
-
-/* ✅ Social Media Icons */
-.social-media a {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    width: 5rem;
-    height: 5rem;
-    background: transparent;
-    border: 0.2rem solid var(--main-color);
-    border-radius: 50%;
-    color: var(--main-color);
-    font-size: 2.4rem;
-    margin: 3rem 1.5rem 3rem 0;
-    transition: 0.5s ease;
-}
-
-.social-media a:hover {
-    background: var(--main-color);
-    color: var(--snd-bg-color);
-    box-shadow: 0 0 1rem var(--main-color);
-}
-
-/* ✅ Button Styling */
-.btn {
-    display: inline-block;
-    padding: 1rem 2.8rem;
-    background: var(--main-color);
-    box-shadow: 0 0 1rem var(--main-color);
-    font-size: 1.8rem;
-    color: var(--bg-color);
-    letter-spacing: 0.1rem;
-    font-weight: 600;
-    border-radius: 10rem;
-    transition: 0.6s ease;
-}
-
-.btn:hover {
-    box-shadow: none;
-}
-
-/* ✅ About Section */
-.about {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 6rem;
-    background: var(--snd-bg-color);
-    padding: 6rem 10%;
-}
-
-/* ✅ About Image */
-.about-img {
-    flex: 1;
-    display: flex;
-    justify-content: flex-start;
-}
-
-.about-img img {
-    width: 22vw;
-    height: 62vh;
-    object-fit: cover;
-    border: 3px solid rgba(0, 0, 255, 0.5);
-    border-radius: 12px;
-}
-
-/* ✅ About Content */
-.about-content {
-    margin-left: 90px;
-}
-
-.about-content h2 {
-    font-size: 5.3rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-}
-
-.about-content h2 span {
-    color: var(--main-color);
-}
-
-.about-content h3 {
-    font-size: 3rem;
-    margin-bottom: 2rem;
-    margin-top: 2rem;
-}
-
-.about-content p {
-    font-size: 1.9rem;
-    line-height: 1.4;
-    margin-bottom: 4rem;
-}
-
-.about-content .btn {
-    padding: 1.2rem 2.5rem;
-    font-size: 1.8rem;
-    border-radius: 50px;
-}
-/* -----------projects section----------- */
-.skills {
-    background: var(--bg-color); /* Pehle wala background */
-    padding: 6rem 10%;
-}
-
-.skills h2 {
-    font-size: 4rem;
-    margin-bottom: 5rem;
-    color: var(--text-color);
-}
-
-/* Skill Container */
-.skills-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Box bada kiya */
-    gap: 3rem; /* Upar-niche aur side gap */
-    justify-items: center;
-}
-
-/* Individual Skill Box */
-.skill-box {
-    background: var(--snd-bg-color); /* Pehle wala box color */
-    padding: 3rem; /* Box aur bada */
-    border-radius: 15px;
-    text-align: center;
-    transition: 0.4s ease-in-out;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-    max-width: 320px; /* Box aur bada */
-    border: 2px solid transparent;
-}
-
-/* Hover Effect - Scale & Glow */
-.skill-box:hover {
-    transform: translateY(-12px) scale(1.05);
-    border-color: var(--main-color);
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
-}
-
-/* Icon Animation */
-.skill-box img {
-    width: 70px; /* Icon bada kiya */
-    height: 70px;
-    margin-bottom: 1.2rem;
-    transition: transform 0.3s ease-in-out;
-}
-
-/* Bounce Effect on Hover */
-.skill-box:hover img {
-    transform: scale(1.2);
-}
-
-/* Skill Title */
-.skill-box h3 {
-    font-size: 2.6rem;
-    margin: 1rem 0;
-    color: var(--text-color);
-}
-
-/* Skill Level Tag */
-.skill-box .skill-level {
-    display: inline-block;
-    padding: 0.6rem 1.2rem;
-    font-size: 1.4rem;
-    background: var(--main-color);
-    color: #fff;
-    border-radius: 20px;
-    margin-top: 1rem;
-    margin-bottom: 3rem;
-}
-
-.skill-box p{
-    font-size: 1.4rem;
-}
-/* -----------portfolio section----------- */
-.portfolio {
-    background: var(--snd-bg-color);
-    padding: 80px 10%;
-}
-
-
-
-.portfolio h2{
-    margin-bottom: 5rem;
-    font-size: 4rem;
-}
-.heading span {
-    color: var(--main-color);
-}
-
-/* Grid Layout with Equal Spacing */
-.portfolio-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 40px;
-    max-width: 1200px;
-    margin: auto;
-}
-
-.portfolio-box {
-    position: relative;
-    border-radius: 12px;
-    overflow: hidden;
-    display: flex;
-    height: 280px; /* Image chhoti ki */
-    transition: transform 0.6s ease-in-out, box-shadow 0.6s ease-in-out;
-}
-
-/* Image Styling */
-.portfolio-box img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.6s ease, filter 0.6s ease;
-    opacity: 0.9;
-}
-
-/* Hover Effect - Slight Scale & Blur */
-.portfolio-box:hover img {
-    transform: scale(1.05);
-    filter: blur(5px);
-}
-
-/* Smooth Overlay - Directly Up Effect */
-.portfolio-layer {
-    position: absolute;
-    bottom: -100%; /* Start outside view */
-    left: 0;
-    width: 100%;
-    height: 100%; /* Pure image tak effect */
-    background: linear-gradient(to top, rgba(0, 29, 80, 0.133), rgba(0, 80, 180, 0.2)); 
-    backdrop-filter: blur(15px);
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    text-align: center;
-    padding: 20px;
-    transition: bottom 0.8s ease-in-out, opacity 0.8s ease-in-out;
-    opacity: 0;
-}
-
-/* Direct Smooth Overlay Effect */
-.portfolio-box:hover .portfolio-layer {
-    bottom: 0; /* Directly upar aaye */
-    opacity: 1;
-}
-
-/* Content Styling */
-.portfolio-layer h4 {
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease-in-out 0.3s, transform 0.6s ease-in-out 0.3s;
-}
-
-.portfolio-layer p {
-    font-size: 1.4rem;
-    margin-bottom: 15px;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease-in-out 0.4s, transform 0.6s ease-in-out 0.4s;
-}
-
-/* Icon Button */
-.portfolio-layer a {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    width: 60px;
-    height: 60px;
-    background: white;
-    border-radius: 50%;
-    text-decoration: none;
-    color: var(--snd-bg-color);
-    font-size: 2rem;
-    transition: background 0.4s ease, transform 0.4s ease;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease-in-out 0.5s, transform 0.6s ease-in-out 0.5s;
-}
-
-.portfolio-layer a:hover {
-    background: var(--primary-color);
-    transform: scale(1.1);
-}
-
-/* Smooth Content Appearance */
-.portfolio-box:hover .portfolio-layer h4,
-.portfolio-box:hover .portfolio-layer p,
-.portfolio-box:hover .portfolio-layer a {
-    opacity: 1;
-    transform: translateY(0);
-}
-/* About Section */
-#about .about {
-    flex-direction: column-reverse;
-    text-align: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 100px 20px;
-}
-#about .col-left {
-    width: 250px;
-    height: 360px;
-}
-#about .col-right {
-    width: 100%;
-}
-#about .col-right h2 {
-    font-size: 1.8rem;
-    font-weight: 500;
-    letter-spacing: 0.2rem;
-    margin-bottom: 10px;
-}
-#about .col-right p {
-    margin-bottom: 20px;
-}
-#about .col-right .cta {
-    color: black;
-    margin-bottom: 50px;
-    padding: 10px 20px;
-    font-size: 2rem;
-}
-#about .col-left .about-img {
-    height: 100%;
-    width: 100%;
-    position: relative;
-    border: 10px solid white;
-}
-#about .col-left .about-img::after {
-    content: '';
-    position: absolute;
-    left: -33px;
-    top: 19px;
-    height: 98%;
-    width: 98%;
-    border: 7px solid crimson;
-    z-index: -1;
-}
-/* End About Section */
-
-
-/* End  Media Query For Desktop */
- {
-  font-family: Arial, sans-serif;
-  text-align: center;
-  margin-top: 50px;
-}
-
-.profile-container {
-  display: inline-block;
-}
-
-.profile-pic {
-  width: 200px;       /* You can adjust the size */
-  height: 200px;
-  object-fit: cover;
-  border-radius: 50%; /* This makes it circular */
-  border: 4px solid #333; /* Optional border */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional shadow */
-}
-
-
-
-/* FontAwesome for icons */
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css');
-
-.footer {
-  background: #111;
-  color: #fff;
-  padding: 40px 20px 20px;
-  font-family: 'Segoe UI', sans-serif;
-}
-
-.footer-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.social-media {
-  display: flex;
-  gap: 25px;
-  justify-content: center;
-  margin-bottom: 30px;
-}
-
-.social-media a {
-  color: #fff;
-  font-size: 24px;
-  transition: transform 0.3s, color 0.3s;
-}
-
-.social-media a:hover {
-  color: #00aced;
-  transform: scale(1.2);
-}
-
-.contact-box {
-  background: #222;
-  padding: 20px;
-  border-radius: 10px;
-  text-align: center;
-  max-width: 300px;
-  margin-bottom: 20px;
-}
-
-.contact-box h3 {
-  margin-bottom: 15px;
-  font-size: 20px;
-  color: #00aced;
-}
-
-.contact-box p {
-  margin: 8px 0;
-  font-size: 15px;
-  line-height: 1.5;
-}
-
-.contact-box i {
-  margin-right: 8px;
-  color: #00aced;
-
-}
-
-.footer-bottom {
-  text-align: center;
-  padding-top: 15px;
-  font-size: 14px;
-  color: #aaa;
-  border-top: 1px solid #333;
-}
-
-
-
-
-/* Keyframes */
-@keyframes hamburger_puls {
-    0% {
-        opacity: 1;
-        transform: scale(1);
-    }
-    100% {
-        opacity: 0;
-        transform: scale(1.4);
-    }
-}
-@keyframes text_reveal_box {
-    50% {
-        width: 100%;
-        left: 0;
-    }
-    100% {
-        width: 0;
-        left: 100%;
-    }
-}
-@keyframes text_reveal {
-    100% {
-        color: white;
-    }
-}
-@keyframes text_reveal_name {
-    100% {
-        color: crimson;
-        font-weight: 500;
-    }
-}
-/* End Keyframes */
-
-/* Media Query For Tablet */
-@media only screen and (min-width: 768px) {
-    .cta {
-        font-size: 2.5rem;
-        padding: 20px 60px;
-    }
-    h1.section-title {
-        font-size: 6rem;
-    }
-
-    /* Hero */
-    #hero h1 {
-        font-size: 7rem;
-    }
-    /* End Hero */
-
-    /* Services Section */
-    #services .service-bottom .service-item {
-        flex-basis: 45%;
-        margin: 2.5%;
-    }
-    /* End Services Section */
-
-    /* Project */
-    #projects .project-item {
-        flex-direction: row;
-    }
-    #projects .project-item:nth-child(even) {
-        flex-direction: row-reverse;
-    }
-    #projects .project-item {
-        height: 400px;
-        margin: 0;
-        width: 100%;
-        border-radius: 0;
-    }
-    #projects .all-projects .project-info {
-        height: 100%;
-    }
-    #projects .all-projects .project-img {
-        height: 100%;
-    }
-    /* End Project */
-
-    /* About */
-    #about .about {
-        flex-direction: row;
-    }
-    #about .col-left {
-        width: 600px;
-        height: 400px;
-        padding-left: 60px;
-    }
-    #about .about .col-left .about-img::after {
-        left: -45px;
-        top: 34px;
-        height: 98%;
-        width: 98%;
-        border: 10px solid crimson;
-    }
-    #about .col-right {
-        text-align: left;
-        padding: 30px;
-    }
-    #about .col-right h1 {
-        text-align: left;
-    }
-    /* End About */
-
-    /* contact  */
-    #contact .contact {
-        flex-direction: column;
-        padding: 100px 0;
-        align-items: center;
-        justify-content: center;
-        min-width: 20vh;
-    }
-    #contact .contact-items {
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-evenly;
-        margin: 0;
-    }
-    #contact .contact-item {
-        width: 30%;
-        margin: 0;
-        flex-direction: row;
-    }
-    #contact .contact-item .icon {
-        height: 100px;
-        width: 100px;
-    }
-    #contact .contact-item .icon img {
-        object-fit: contain;
-    }
-    #contact .contact-item .contact-info {
-        width: 100%;
-        text-align: left;
-        padding-left: 20px;
-    }
-    /* End contact  */
-}
-/* End Media Query For Tablet */
-
-/* Media Query For Desktop */
-@media only screen and (min-width: 1200px) {
-    /* header */
-    #header .hamburger {
-        display: none;
-    }
-    #header .nav-list ul {
-        position: initial;
-        display: block;
-        height: auto;
-        width: fit-content;
-        background-color: transparent;
-    }
-    #header .nav-list ul li {
-        display: inline-block;
-    }
-    #header .nav-list ul li a {
-        font-size: 1.8rem;
-    }
-    #header .nav-list ul a:after {
-        display: none;
-    }
-    /* End header */
-
-    #services .service-bottom .service-item {
-        flex-basis: 22%;
-        margin: 1.5%;
-    }
-}
-
-
-
-
-     .home
-{
-    border: 1px solid;
-    display: flex;
-    justify-content: center;
-    background-image: url('');
-    background-repeat:
-    background-position: center;
-    background-size: cover;
-    padding-top: 17rem;
-    padding-bottom: 10rem;
-}
-
-.home .content
-{
-    border: 0px solid;
-    text-align: center;
-    width: 56rem;
-    padding: 2rem;
-}
-
-.home .content h3
-{
-    color: var(--black);
-    font-size: 3rem;
-}
-
-/* main line ke niche ka color*/
-.home .content p
-{
-    font-size: 1.4rem;
-    color: var(--black);
-    padding: 1rem 0;
-    line-height: 1.8rem;
-}
-
-.home .content span
-{
-    color: var(--navy-blue);
-}</style>
 <body>
 
-    <!-- Header Design -->
-    <header class="header">
-        <a href="#" class="logo">Portfolio</a>
-        <i class="fa-solid fa-bars" id="menu-icon"></i>
-
-        <nav class="navbar">
-            <a href="#home" class="active">Home</a>
-            <a href="#about">About</a>
-            <a href="#skills">Skills</a>
-            <a href="Qualifications.html">Qualification</a>
-            <a href="#portfolio">Project</a>
-            <a href="#contact">Contact</a>
-        </nav>
-    </header>
-
-        <!-- Home Section Design -->
-    <section class="home" id="home">
-        <div class="home-content">
-            <h4>Hi, Myself</h4>
-            <h1><span>A</span>nshul <span>H</span>edau</h1>
-            <h3>and I'm a AI&ML Student <span class="multiple-text"></span></h3>
-            <p>I am a final-year B.Tech student specializing in Artificial Intelligence and Machine Learning (AIML). I have a strong foundation in data handling, statistical analysis, and machine learning, with hands-on experience in transforming raw data into actionable insights. My expertise includes Python, SQL, Excel, and visualization tools like Power BI and Tableau.</p>
-            <div class="social-media">
-                <a href="https://www.linkedin.com/in/anshul-hedau-aaa66b277"><i class="fa-brands fa-linkedin-in"></i></a>
-
-                <a href="https://github.com/anshul150608"><i class="fa-brands fa-github"></i></a>
-
-                <a href="https://x.com/AnshulHedau1?t=hsm-WcVFppHIjcpzDFCGoQ&s=09"><i class="fa-brands fa-twitter"></i></a>
-               
-            </div>
-            <a href="Anshul_Resume_21.pdf" type="application/pdf" class="btn" target="_blank">Download CV</a>
-
-        </div>
-        <div class="home-img">
-            <img src="images/mee.jpg" alt="">
-        </div>
-    </section>
-
-        <!-- About Section Design -->
-         <section class="about" id="about">
-            <div class="about-img">
-                <img src="images/resume.png" alt="">
-            </div>
-            <div class="about-content">
-                <h2 class="headeing">About <span>Me</span></h2>
-                <h3>Data Analyst</h3>
-                <p>A dedicated AI Bachelor's student at S.B. Jain Institute of Technology, Management, and Research, Nagpur. Through internships in Data Cleaning & Transformation, and Power BI Data Visualization, I have refined my technical and analytical skills. As a Power BI Intern, I created various dashboard like Sales Analysis , Social Media Monitoring, Website Analytics. Then As a Data Analytics , I able to Analysing Data Patterns , understand Data Collection and Cleaning Process. I am  currently leading a Mini-Project as an Group Leader in college. Aspiring to excel as a Data Analyst , ready to pursue my goals in data science.  My expertise includes Python, SQL, Excel, and visualization tools like Power BI and Tableau.
-</p>
-                <a href="#" class="btn">Read more</a>
-            </div>
-         </section>
-
-        <!-- projects Section Design -->
-        <section class="skills" id="skills">
-            <h2 class="heading"> My <span>Skills</span></h2>
-            <div class="skills-container">
-                <div class="skill-box">
-                    <img src="images/Python.jpeg" alt="Python">
-                    <h3>Python</h3>
-                    <span class="skill-level">Intermediate</span>
-                    <p>Pandas, NumPy, Matplotlib, APIs, Web Scraping</p>
-                </div>
-                <div class="skill-box">
-                    <img src="images/sq.png" alt="SQL">
-                    <h3>SQL</h3>
-                    <span class="skill-level">Advanced</span>
-                    <p>Writing complex queries, joins, subqueries, aggregate functions.</p>
-                </div>
-                <div class="skill-box">
-                    <img src="images/BI.png" alt="Power BI">
-                    <h3>Power BI</h3>
-                    <span class="skill-level">Intermediate</span>
-                    <p>Data modeling, Visualization, Interactive dashboards, Report.</p>
-                </div>
-                <div class="skill-box">
-                    <img src="images/excel.png"alt="Excel">
-                    <h3>Excel</h3>
-                    <span class="skill-level">Intermediate</span>
-                    <p>PivotTables, Charts, Conditional Formatting, Data Validation.</p>
-                </div>
-                <div class="skill-box">
-                    <img src="images/statics.png" alt="Statics">
-                    <h3>Statics</h3>
-                    <span class="skill-level">Intermediate</span>
-                    <p>Hypothesis Testing, Probability Distribution, Correlation and Statistical Visualization.</p>
-                </div>
-                <div class="skill-box">
-                    <img src="images/git.png?w=215&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7" alt="GitHub">
-                    <h3>GitHub</h3>
-                    <span class="skill-level">Intermediate</span>
-                    <p>Branching & Merging, Open-sourced contribution, CI/CD Integration.</p>
-                </div>
-                
-            </div>
-        </section>
-        
-
-        <!-- portfolio Section Design -->
-         <section class="portfolio" id="portfolio">
-            <h2 class="heading">Latest <span>Projects</span></h2>
-
-            <div class="portfolio-container">
-                <div class="portfolio-box">
-                    <img src="images/SAR_Image.png?w=312&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7" alt="">
-                    <div class="portfolio-layer">
-                        <h4>SAR Image Colorization</h4>
-                        <p>Adding color to the SAR image enhanced the ability to differentiate multiple features, making it easy for work such as land cover mapping and disaster surveys.Also, the combination of colorized SAR images and optical satellite images created new potential for environmental monitoring, urban planning, and agricultural applications.</p>
-                        <a href="https://github.com/anshul150608/SAR-Image-Colorization" class="link-button" target="_blank">Site</a>
-                    </div>
-
-                </div>
-                <div class="portfolio-box">
-                    <img src="images/Sales.png?pid=ImgDet&w=184&h=122&c=7&dpr=1.3" alt="yu">
-                    <div class="portfolio-layer">
-                        <h4>Chocolate Sales Analysis </h4>
-                        <p>Chocolate Sales Analysis is a Power BI project that visualizes chocolate sales across regions and time periods. It highlights KPIs like total revenue, quantity sold, and top-performing products. The dashboard aids in identifying sales patterns, regional demand, and growth opportunities.
-</p>
-                        <a href="https://github.com/anshul150608/Chocolate-sales-analysis" class="link-button" target="_blank">Site</a>
-                    </div>
-
-            </div>
-                <div class="portfolio-box">
-                    <img src="images/sap.png" alt="sap">
-                    <div class="portfolio-layer">
-                        <h4>SAP Clothing Co.</h4>
-                        <p>SAP Clothing Co. is a sleek e-commerce website crafted using HTML, CSS, and JavaScript to deliver a modern shopping experience. It features intuitive product listings with images, prices, and descriptions, allowing users to browse a curated selection of stylish clothing and accessories. The site also includes robust shopping cart functionality, enabling users to add items, adjust quantities, and proceed to checkout, ensuring a seamless and user-friendly shopping journey.</p>
-                        <a href="https://sap-clothing-co.netlify.app/" class="link-button" target="_blank">Site</a>
-                    </div>
-
-                </div>
-                <div class="portfolio-box">
-                    <img src="images/photo.png" alt="photo">
-                    <div class="portfolio-layer">
-                        <h4>Social Media Sentiment Analysis using Twitter Dataset</h4>
-                        <p>Social Media has opened a whole new world for people around the globe.People are just a click away from getting huge chunk of information. With information comes people’s opinion and with this comes the positive and negative outlook of people regarding a topic. Sometimes this also results into bullying and passing on hate comments about someone or something.</p>
-                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                    </div>
-
-                </div>
-                
-
-            </div>
-         </section>
-    
-       
-       
-
-  <!--- banner section --->
-<section class="home" id="Home">
-    <div class="content">
-        <h3>Get in<span>Touch</span></h3>
-        <p><p>If you have any queries, want to work with me, or simply want to say hi – fill out the form below and I’ll get back to you soon!</p>
-
-</p>
-
-<a href="https://docs.google.com/forms/d/1q3WDbv1F1kSG0a3ZE6PDBffL3p52RyYf7tbdoVyVMCA/edit" class="btn">"Have a Query? Let’s Connect!"</a>
+<header>
+  <nav class="nav">
+    <div class="logo">Anshul</div>
+    <button class="btn" onclick="toggleTheme()" style="padding:0.4rem 1rem;">🌙</button>
+    <div class="menu-btn" onclick="toggleMenu()">☰</div>
+    <div class="nav-links" id="navLinks">
+      <a href="#home" class="active">Home</a>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#qualification">Qualification</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
     </div>
+  </nav>
+</header>
+
+<section class="home" id="home">
+  <div>
+    <h1>Hi, I'm <span>Anshul</span></h1>
+    <p>BTech student passionate about AI, ML & Data Analytics</p>
+    <a href="#projects" class="btn">View Projects</a>
+    <div class="social-links">
+      <a href="https://www.linkedin.com/in/anshul-hedau-aaa66b277" target="_blank" class="linkedin">LinkedIn</a>
+      <a href="https://github.com/anshul150608" target="_blank" class="github">GitHub</a>
+    </div>
+  </div>
+  <div class="home-img">
+    <img src="C:/Users/ANSHUL/Desktop/Portfolio/images/mee.png" alt="profile">
+  </div>
 </section>
-    <!--- banner section --->
 
-<!-- Footer Section -->
-
-
-<footer class="footer">
-  <div class="footer-container">
-    <!-- Social Media Icons -->
-    <div class="social-media">
-      <a href="https://www.linkedin.com/in/anshul-hedau-aaa66b277" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-      <a href="https://github.com/anshul150608" aria-label="GitHub"><i class="fab fa-github"></i></a>
-      <a href="#" aria-label="https://x.com/AnshulHedau1?t=hsm-WcVFppHIjcpzDFCGoQ&s=09"><i class="fab fa-twitter"></i></a>
-      <a href="https://www.instagram.com/iam_anshul_8?igsh=MTNnOTczcG5uM3dpdw==" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+<section id="about">
+  <h2 class="section-title">About Me</h2>
+  <div class="about-content">
+    <div>
+      <p>A dedicated AI Bachelor's student at S.B. Jain Institute of Technology, Management, and Research, Nagpur. Through internships in Data Cleaning & Transformation, and Power BI Data Visualization, I have refined my technical and analytical skills. As a Power BI Intern, I created various dashboard like Sales Analysis , Social Media Monitoring, Website Analytics. Then As a Data Analytics , I able to Analysing Data Patterns , understand Data Collection and Cleaning Process. I am currently leading a Mini-Project as an Group Leader in college.</p>
+      <p>My goal is to become an AI/ML Engineer and work on real-world impactful problems.</p>
+      <a href="C:/Users/ANSHUL/Desktop/Portfolio/Anshul Hedau.pdf" class="btn" target="_blank" style="margin-top:1rem;">Download Resume</a>
     </div>
-
-    <!-- Contact Info Box -->
-    <div class="contact-box">
-      <h3>Contact Info</h3>
-      <p><i class="fas fa-phone-alt"></i> +91 8349944257</p>
-      <p><i class="fas fa-envelope"></i> anshulhedau707@gmail.com</p>
-      <p><i class="fas fa-map-marker-alt"></i> Sausar M.P , India </p>
+    <div>
+      <p><strong>Core Skills:</strong><br>Python, SQL, Excel, Power BI, Tableau, Machine Learning, Statistics</p>
     </div>
   </div>
+</section>
 
-  <!-- Bottom Note -->
-  <div class="footer-bottom">
-    <p>&copy; 2025 Anshul. All rights reserved.</p>
+<section id="internships">
+  <h2 class="section-title">Internships</h2>
+  <div class="projects-grid">
+    <div class="project">
+      <h3>Data Science & ML Intern</h3>
+      <p><strong>YBI Foundation</strong> • July 2024</p>
+      <p>Worked on Python, Machine Learning models, data preprocessing and real-world datasets.</p>
+    </div>
+    <div class="project">
+      <h3>Data Analytics Intern</h3>
+      <p><strong>The Internship Studio</strong> • Jan 2025</p>
+      <p>Hands-on experience with Excel, Power BI, Tableau and Python libraries.</p>
+    </div>
   </div>
+</section>
+
+<section id="skills">
+  <h2 class="section-title">Skills</h2>
+  <div class="skills-grid">
+    <div class="skill">
+      <img src="https://cdn-icons-png.flaticon.com/512/5968/5968350.png" width="50">
+      <h3>Python</h3><span>Intermediate</span>
+      <p>Pandas, NumPy, Matplotlib, APIs, Web Scraping</p>
+    </div>
+    <div class="skill">
+      <img src="https://cdn-icons-png.flaticon.com/512/4248/4248443.png" width="50">
+      <h3>SQL</h3><span>Advanced</span>
+      <p>Joins, Subqueries, Aggregate Functions</p>
+    </div>
+    <div class="skill">
+      <img src="https://cdn-icons-png.flaticon.com/512/732/732220.png" width="50">
+      <h3>Power BI</h3><span>Intermediate</span>
+      <p>Dashboards, Data Modeling, DAX</p>
+    </div>
+    <div class="skill">
+      <img src="https://cdn-icons-png.flaticon.com/512/732/732212.png" width="50">
+      <h3>Excel</h3><span>Intermediate</span>
+      <p>Pivot Tables, Charts, Conditional Formatting</p>
+    </div>
+    <div class="skill">
+      <img src="https://cdn-icons-png.flaticon.com/512/733/733553.png" width="50">
+      <h3>Statistics</h3><span>Intermediate</span>
+      <p>Probability, Correlation, Hypothesis Testing</p>
+    </div>
+    <div class="skill">
+      <img src="https://cdn-icons-png.flaticon.com/512/733/733609.png" width="50">
+      <h3>GitHub</h3><span>Intermediate</span>
+      <p>Branching, Merging, CI/CD Basics</p>
+    </div>
+  </div>
+</section>
+
+<section id="qualification">
+  <h2 class="section-title">Qualification</h2>
+  <div class="timeline">
+    <div class="timeline-item"><h3>BTech (2022–2026)</h3><p>S.B. Jain Institute of Technology</p></div>
+    <div class="timeline-item"><h3>Internships</h3><p>Data Science & ML Internships</p></div>
+  </div>
+</section>
+
+<section id="projects">
+  <h2 class="section-title">Latest <span style="color:#2563eb">Projects</span></h2>
+
+  <div class="projects-grid">
+
+    <!-- Project 1 -->
+    <div class="project-card">
+      <img src="images/SAR_Image.png" alt="SAR Image Colorization">
+      <div class="project-overlay">
+        <h3>SAR Image Colorization</h3>
+        <p>
+          Colorization of SAR images to enhance land-cover mapping,
+          disaster surveys, environmental monitoring and urban planning.
+        </p>
+        <a href="https://github.com/anshul150608/SAR-Image-Colorization" target="_blank">
+          View Project
+        </a>
+      </div>
+    </div>
+
+    <!-- Project 2 -->
+    <div class="project-card">
+      <img src="images/virtual.png" alt="Virtual Herbal Garden">
+      <div class="project-overlay">
+        <h3>🌿 Virtual Herbal Garden</h3>
+        <p>
+          Interactive web platform showcasing medicinal plants,
+          botanical details, health benefits and traditional knowledge.
+        </p>
+        <a href="#" target="_blank">Live Demo</a>
+      </div>
+    </div>
+
+    <!-- Project 3 -->
+    <div class="project-card">
+      <img src="images/dashboard.png" alt="Power BI Dashboard">
+      <div class="project-overlay">
+        <h3>Sales Analytics Dashboard</h3>
+        <p>
+          Power BI dashboard for KPIs, sales trends, region-wise and
+          product performance analysis.
+        </p>
+        <a href="#">View</a>
+      </div>
+    </div>
+
+    <!-- Project 4 -->
+    <div class="project-card">
+      <img src="images/ecommerce.png" alt="Ecommerce Website">
+      <div class="project-overlay">
+        <h3>E-Commerce Website</h3>
+        <p>
+          Fully responsive shopping website with product listing,
+          UI optimization and performance tracking.
+        </p>
+        <a href="#">Visit Site</a>
+      </div>
+    </div>
+
+    <!-- Project 5 -->
+    <div class="project-card">
+      <img src="images/ecommerce.png" alt="Ecommerce Website">
+      <div class="project-overlay">
+        <h3>E-Commerce Website</h3>
+        <p>
+          Fully responsive shopping website with product listing,
+          UI optimization and performance tracking.
+        </p>
+        <a href="#">Visit Site</a>
+      </div>
+    </div>
+
+<!-- Project 6 -->
+    <div class="project-card">
+      <img src="images/ecommerce.png" alt="Ecommerce Website">
+      <div class="project-overlay">
+        <h3>E-Commerce Website</h3>
+        <p>
+          Fully responsive shopping website with product listing,
+          UI optimization and performance tracking.
+        </p>
+        <a href="#">Visit Site</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<section class="getintouch" id="getintouch">
+  <div class="getintouch-box">
+    <h2>Get in Touch</h2>
+
+    <p class="subtitle">
+      If you have any queries, want to work with me, or simply want to say hi –  
+      fill out the form below and I’ll get back to you soon!
+    </p>
+
+    <p class="highlight-text">
+      “Have a Query? Let’s Connect!”
+    </p>
+
+    <a href="https://docs.google.com/forms/d/1q3WDbv1F1kSG0a3ZE6PDBffL3p52RyYf7tbdoVyVMCA/edit" 
+       target="_blank" 
+       class="getintouch-btn">
+      Fill the Form
+    </a>
+  </div>
+</section>
+
+
+<section id="contact" class="contact">
+  <footer class="footer">
+
+  <!-- Social Icons -->
+  <div class="footer-social">
+    <a href="https://www.linkedin.com/in/yourprofile" target="_blank">
+      <i class="fab fa-linkedin-in"></i>
+    </a>
+    <a href="https://github.com/yourgithub" target="_blank">
+      <i class="fab fa-github"></i>
+    </a>
+    <a href="https://twitter.com" target="_blank">
+      <i class="fab fa-twitter"></i>
+    </a>
+    <a href="https://instagram.com" target="_blank">
+      <i class="fab fa-instagram"></i>
+    </a>
+  </div>
+
+  <!-- Contact Card -->
+  <div class="footer-card">
+    <h3>Contact Info</h3>
+
+    <p><i class="fas fa-phone"></i> +91 8349944257</p>
+    <p><i class="fas fa-envelope"></i> anshulhedau707@gmail.com</p>
+    <p><i class="fas fa-location-dot"></i> Sausar M.P., India</p>
+  </div>
+
+  <!-- Copyright -->
+  <p class="footer-copy">
+    © 2025 Anshul. All rights reserved.
+  </p>
+
 </footer>
+</section>
 
+<script>
+  function toggleMenu(){
+    document.getElementById('navLinks').classList.toggle('show');
+  }
 
-        
-<script src="https://unpkg.com/scrollreveal"></script>
+  function toggleTheme(){
+    document.body.classList.toggle('dark');
+  }
+</script>
 
-<script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
-
-<script src="script.js"></script>
 </body>
 </html>
